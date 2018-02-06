@@ -1,0 +1,63 @@
+<main role="main" class="container h-100">
+
+	<h1 class="h4 text-center">Edit User</h1>
+
+	<div class="default-view">
+		<div class="row h-100 justify-content-center align-items-center" *ngIf="viewLoaded">
+			<form (ngSubmit)="save( userForm.valid )" #userForm="ngForm">
+				<div class="form-row" *ngIf="message">
+					<div class="col-sm-12">
+						<ngb-alert  [type]="message.type" [dismissible]="false">
+							<span>{{ message.message }}</span>
+						</ngb-alert>
+					</div>
+				</div>
+				<div class="form-row">
+					<div class="col-sm-12 col-md-5">
+						<div class="form-group has-feedback">
+							<label for="first-name" class="offset-label">First Name</label>
+							<input type="text" id="first-name" name="firstName" [(ngModel)]="model.firstName" class="form-control" placeholder="First Name" required autofocus>
+							<span *ngIf="!model.firstName">
+								<small class="text-danger">First name is required</small>
+							</span>
+						</div>
+					</div>
+					<div class="col-sm-12 col-md-5">
+						<div class="form-group has-feedback">
+							<label for="last-name" class="offset-label">Last Name</label>
+							<input type="text" id="last-name" name="lastName" [(ngModel)]="model.lastName" class="form-control" placeholder="Last Name" required>
+							<span *ngIf="!model.lastName">
+								<small class="text-danger">Last name is required</small>
+							</span>
+						</div>
+					</div>
+					<div class="col-sm-12 col-md-2">
+						<div class="form-group">
+							<label for="age" class="offset-label">Age</label>
+							<input type="number" id="age" name="age" min="0" [(ngModel)]="model.age" class="form-control" placeholder="Age">
+						</div>
+					</div>
+				</div>
+				<div class="form-row">
+					<div class="col-sm-12">
+						<div class="form-group">
+							<label for="description" class="offset-label">Description</label>
+							<textarea id="description" name="description" [(ngModel)]="model.description" class="form-control"></textarea>
+						</div>
+					</div>
+				</div>
+				<div class="form-row">
+					<div class="col-sm-12">
+						<button class="btn btn-primary btn-success float-right save-button" type="submit"
+							[disabled]="isSaving || ! userForm.valid ? true : null">
+							<i *ngIf="!isSaving" class="fa fa-check"></i>
+							<i *ngIf="isSaving" class="fa fa-lg fa-spinner fa-spin"></i>
+							<span> Save </span>
+						</button>
+						<a class="btn" routerLink="/users"> <i class="fa fa-times"></i> Cancel </a>
+					</div>
+				</div>
+			</form>
+		</div>
+	</div>
+</main>

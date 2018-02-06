@@ -1,0 +1,94 @@
+<main role="main" class="container h-100">
+
+	<h1 class="h4 text-center">User Management</h1>
+
+	<div class="default-view" *ngIf="viewWidth >= 1024">
+		<div class="row h-100 justify-content-center align-items-center users-action-bar">
+			<div class="col-sm-12 col-md-6">
+				<input type="text" #filterName id="filter-name" placeholder="Filter By Name" (keyup)="search(filterName.value)" class="form-control">
+			</div>
+			<div class="col-sm-6 col-md-3">
+				<button type="button" id="delete" class="btn btn-primary btn-block delete"
+					[disabled]="selection.length == 0"
+					(click)="deleteSelected()">Delete Selected</button>
+			</div>
+			<div class="col-sm-6 col-md-3">
+				<a [href]="fileDownloadHref" (click)="download()" class="btn btn-primary btn-block download" download="users.json" #downloadButton>Download</a>
+			</div>
+		</div>
+
+		<div class="row h-100 justify-content-center align-items-center">
+			<div class="col-sm-12">
+				<table class="table table-sm display table-striped table-hover">
+					<thead>
+						<tr>
+							<th><input class="master-toggle" type="checkbox" (click)="masterToggle();" [checked]="isAllSelected() ? true : false"/></th>
+							<th>Name</th>
+							<th>Actions</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr *ngFor="let user of users" class="table-row">
+							<td><input type="checkbox" (click)="selectUser(user);" [checked]="selection.includes( user ) ? true : false"/></td>
+							<td>{{user.firstName}} {{user.lastName}} </td>
+							<td><a (click)="showUser( user )">Show</a> | <a (click)="deleteUserConfirm( user )">Delete</a> </td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+			<div class="col-sm-12">
+				{{ selection.length }} items selected
+			</div>
+		</div>
+	</div>
+
+	<div class="mobile-view" *ngIf="viewWidth <= 1023">
+		<div class="row h-100 justify-content-center align-items-center users-action-bar">
+			<div class="col-sm-8">
+				<div class="form-group">
+						<input type="text" #filterName id="filter-name" placeholder="Filter By Name" (keyup)="search(filterName.value)" class="form-control">
+				</div>
+			</div>
+			<div class="col-sm-4">
+				<div class="form-group">
+					<button type="button" class="btn btn-primary btn-block"
+						(click)="masterToggle()"><i class="fa fa-check-circle"></i>&nbsp;Select All</button>
+				</div>
+			</div>
+			<div class="col-sm-6">
+				<div class="form-group">
+					<button id="delete" type="button" class="btn btn-primary btn-block delete"
+					[disabled]="selection.length == 0"
+					(click)="deleteSelected()">Delete Selected</button>
+				</div>
+			</div>
+			<div class="col-sm-6">
+				<div class="form-group">
+					<a [href]="fileDownloadHref" (click)="download()" class="btn btn-primary btn-block download" download="users.json" #downloadButton>Download</a>
+				</div>
+			</div>
+			<div class="col-sm-12">
+				{{ selection.length }} items selected
+			</div>
+		</div>
+
+		<div class="row h-100 justify-content-left align-items-left">
+			<div class="col-sm-6 margin-top-20" *ngFor="let user of users">
+				<div class="card h-100">
+					<div class="card-body">
+						<h5 class="card-title">{{user.firstName}} {{user.lastName}}</h5>
+						<p class="card-text">{{ user.description }}</p>
+						<div class="row h-100 justify-content-center align-items-center">
+							<input class="card-action-bar-item col-sm-12 col-md-3" type="checkbox" (click)="selectUser(user);" [checked]="selection.includes( user ) ? true : false"/>
+							<a (click)="showUser( user )" class="col-sm-12 col-md-3">Show</a>
+							<a (click)="deleteUserConfirm( user )" class="col-sm-12 col-md-3">Delete</a>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+	</div>
+
+
+</main>
